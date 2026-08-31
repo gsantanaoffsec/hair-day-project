@@ -2,6 +2,8 @@ import Button from '../components/button'
 import ButtonIcon from '../components/button-icon'
 import Icon from '../components/icon'
 import Text from '../components/text'
+import InputText from '../components/text-input'
+import TimeSelect from '../components/time-select'
 import CalendarIcon from './../assets/icons/calendar.svg?react'
 import CaretDownIcon from './../assets/icons/caret-down.svg?react'
 import CaretLeftIcon from './../assets/icons/caret-left.svg?react'
@@ -20,15 +22,15 @@ export default function PageComponents() {
       </Text>
 
       <div className="flex gap-1">
-        <Icon svg={CalendarIcon} />
-        <Icon svg={CaretDownIcon} />
-        <Icon svg={CaretLeftIcon} />
-        <Icon svg={CaretRightIcon} />
-        <Icon svg={CloudSunIcon} />
-        <Icon svg={MoonStarsIcon} />
-        <Icon svg={SunHorizonIcon} />
-        <Icon svg={TrashIcon} />
-        <Icon svg={UserSquareIcon} />
+        <Icon svg={CalendarIcon} className="fill-yellow-dark"/>
+        <Icon svg={CaretDownIcon} className="fill-yellow-dark"/>
+        <Icon svg={CaretLeftIcon} className="fill-yellow-dark"/>
+        <Icon svg={CaretRightIcon} className="fill-yellow-dark"/>
+        <Icon svg={CloudSunIcon} className="fill-yellow-dark"/>
+        <Icon svg={MoonStarsIcon} className="fill-yellow-dark"/>
+        <Icon svg={SunHorizonIcon} className="fill-yellow-dark"/>
+        <Icon svg={TrashIcon} className="fill-yellow-dark"/>
+        <Icon svg={UserSquareIcon} className="fill-yellow-dark"/>
       </div>
 
       <div>
@@ -39,8 +41,18 @@ export default function PageComponents() {
         <ButtonIcon icon={TrashIcon}></ButtonIcon>
       </div>
 
+      <div className="flex gap-2">
+        <TimeSelect>09:00</TimeSelect>
+        <TimeSelect>09:00</TimeSelect>
+        <TimeSelect selected>09:00</TimeSelect>
+        <TimeSelect disabled>09:00</TimeSelect>
+      </div>
 
 
+      <div className="flex gap-2">
+        <InputText filled/>
+        <InputText active/>
+      </div>
     </main>
   )
 }
