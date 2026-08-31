@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority'
 
 export const textInputVariants = cva(
   `
-    flex w-85 h-12 p-3 items-center gap-2 rounded-lg`,
+  flex w-85 h-12 p-3 items-center gap-2 rounded-lg`,
   {
     variants: {
       active: {

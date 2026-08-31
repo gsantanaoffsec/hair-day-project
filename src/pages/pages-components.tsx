@@ -1,5 +1,6 @@
 import Button from '../components/button'
 import ButtonIcon from '../components/button-icon'
+import DateInput from '../components/date-input'
 import Icon from '../components/icon'
 import Text from '../components/text'
 import InputText from '../components/text-input'
@@ -22,15 +23,15 @@ export default function PageComponents() {
       </Text>
 
       <div className="flex gap-1">
-        <Icon svg={CalendarIcon} className="fill-yellow-dark"/>
-        <Icon svg={CaretDownIcon} className="fill-yellow-dark"/>
-        <Icon svg={CaretLeftIcon} className="fill-yellow-dark"/>
-        <Icon svg={CaretRightIcon} className="fill-yellow-dark"/>
-        <Icon svg={CloudSunIcon} className="fill-yellow-dark"/>
-        <Icon svg={MoonStarsIcon} className="fill-yellow-dark"/>
-        <Icon svg={SunHorizonIcon} className="fill-yellow-dark"/>
-        <Icon svg={TrashIcon} className="fill-yellow-dark"/>
-        <Icon svg={UserSquareIcon} className="fill-yellow-dark"/>
+        <Icon svg={CalendarIcon} className="fill-yellow-dark" />
+        <Icon svg={CaretDownIcon} className="fill-yellow-dark" />
+        <Icon svg={CaretLeftIcon} className="fill-yellow-dark" />
+        <Icon svg={CaretRightIcon} className="fill-yellow-dark" />
+        <Icon svg={CloudSunIcon} className="fill-yellow-dark" />
+        <Icon svg={MoonStarsIcon} className="fill-yellow-dark" />
+        <Icon svg={SunHorizonIcon} className="fill-yellow-dark" />
+        <Icon svg={TrashIcon} className="fill-yellow-dark" />
+        <Icon svg={UserSquareIcon} className="fill-yellow-dark" />
       </div>
 
       <div>
@@ -43,15 +44,17 @@ export default function PageComponents() {
 
       <div className="flex gap-2">
         <TimeSelect>09:00</TimeSelect>
-        <TimeSelect>09:00</TimeSelect>
         <TimeSelect selected>09:00</TimeSelect>
         <TimeSelect disabled>09:00</TimeSelect>
       </div>
 
+      <div className="flex gap-2">
+        <InputText filled />
+        <InputText active />
+      </div>
 
       <div className="flex gap-2">
-        <InputText filled/>
-        <InputText active/>
+        <DateInput />
       </div>
     </main>
   )

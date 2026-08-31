@@ -4,6 +4,7 @@ export const timeSelectVariants = cva(
   `
     flex w-[78.5px] h-10 items-center justify-center
     py-2 pr-[19.5px] pl-4.75 rounded-lg pointer-events-auto
+    cursor-pointer transition
     `,
   {
     variants: {
