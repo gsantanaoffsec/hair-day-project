@@ -1,3 +1,4 @@
+import React from 'react'
 import Button from '../components/button'
 import DateInput from '../components/date-input'
 import Text from '../components/text'
@@ -11,6 +12,12 @@ import MoonStarsIcon from './../assets/icons/moon-stars.svg?react'
 import SunHorizonIcon from './../assets/icons/sun-horizon.svg?react'
 
 export default function PageHome() {
+  const [selectedTime, setSelectedTime] = React.useState('')
+
+  function handleSelectTime(time: string) {
+    setSelectedTime(time)
+  }
+
   return (
     <div className="flex w-screen h-screen p-5">
       <Schedule>
@@ -40,8 +47,18 @@ export default function PageHome() {
                   Manhã
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
-                  <TimeSelect>09:00</TimeSelect>
-                  <TimeSelect>10:00</TimeSelect>
+                  <TimeSelect
+                    selected={selectedTime === '09:00'}
+                    onClick={() => setSelectedTime({})}
+                  >
+                    09:00
+                  </TimeSelect>
+                  <TimeSelect
+                    selected={selectedTime === '10:00'}
+                    onClick={handleSelectTime}
+                  >
+                    10:00
+                  </TimeSelect>
                   <TimeSelect>11:00</TimeSelect>
                   <TimeSelect>12:00</TimeSelect>
                 </div>

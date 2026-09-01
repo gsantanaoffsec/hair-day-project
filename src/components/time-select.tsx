@@ -15,12 +15,15 @@ export default function TimeSelect({
   children,
   selected,
   disabled,
+  onClick,
   className,
   ...props
 }: TimeSelectProps) {
   return (
     <button
+      type="button"
       className={cx(timeSelectVariants({ selected, disabled }), className)}
+      onClick={() => onClick?.(children)}
       {...props}
     >
       <Text className={timeSelectTextVariants({ selected, disabled })}>
