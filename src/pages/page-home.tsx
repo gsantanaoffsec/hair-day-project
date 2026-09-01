@@ -1,10 +1,14 @@
 import Button from '../components/button'
-import Main from '../components/core-component/main'
-import Schedule from '../components/core-component/schedule'
 import DateInput from '../components/date-input'
 import Text from '../components/text'
 import InputText from '../components/text-input'
 import TimeSelect from '../components/time-select'
+import Main from '../core-component/main'
+import PeriodCard from '../core-component/period-card'
+import Schedule from '../core-component/schedule'
+import CloudSunIcon from './../assets/icons/cloud-sun.svg?react'
+import MoonStarsIcon from './../assets/icons/moon-stars.svg?react'
+import SunHorizonIcon from './../assets/icons/sun-horizon.svg?react'
 
 export default function PageHome() {
   return (
@@ -48,12 +52,12 @@ export default function PageHome() {
                   Tarde
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
-                  <TimeSelect disabled>13:00</TimeSelect>
-                  <TimeSelect disabled>14:00</TimeSelect>
-                  <TimeSelect selected>15:00</TimeSelect>
-                  <TimeSelect disabled>16:00</TimeSelect>
-                  <TimeSelect disabled>17:00</TimeSelect>
-                  <TimeSelect selected>18:00</TimeSelect>
+                  <TimeSelect>13:00</TimeSelect>
+                  <TimeSelect>14:00</TimeSelect>
+                  <TimeSelect>15:00</TimeSelect>
+                  <TimeSelect>16:00</TimeSelect>
+                  <TimeSelect>17:00</TimeSelect>
+                  <TimeSelect>18:00</TimeSelect>
                 </div>
               </div>
 
@@ -79,13 +83,39 @@ export default function PageHome() {
         </form>
       </Schedule>
       <Main>
-        <div className="flex flex-row items-start justify-between gap-3">
+        <div className="flex flex-row items-start justify-between w-full">
           <div className="flex flex-col gap-1">
-            <Text variant="title-lg" className="text-gray-100">
-              Sua agenda
+            <Text variant="title-lg">Sua agenda</Text>
+            <Text variant="text-sm" className="text-gray-300!">
+              Consulte os seus cortes de cabelo agendados por dia
             </Text>
           </div>
+          <DateInput />
         </div>
+        <PeriodCard
+          icon={SunHorizonIcon}
+          period="Manhã"
+          hours="09-12h"
+          appointments={[
+            { id: '1', hour: '11:00', clientName: 'Ryan Dorwart' },
+          ]}
+        />
+        <PeriodCard
+          icon={CloudSunIcon}
+          period="Tarde"
+          hours="13-18h"
+          appointments={[
+            { id: '1', hour: '11:00', clientName: 'Ryan Dorwart' },
+          ]}
+        />
+        <PeriodCard
+          icon={MoonStarsIcon}
+          period="Noite"
+          hours="19-21h"
+          appointments={[
+            { id: '1', hour: '11:00', clientName: 'Ryan Dorwart' },
+          ]}
+        />
       </Main>
     </div>
   )
