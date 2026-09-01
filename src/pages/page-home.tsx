@@ -23,20 +23,20 @@ export default function PageHome() {
         </div>
         <form className="flex flex-col gap-8 self-stretch">
           <div className="flex flex-col gap-2 self-stretch">
-            <Text variant="title-md" className="text-gray-200">
+            <Text variant="title-md" className="text-gray-200!">
               Data
             </Text>
             <DateInput />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Text variant="title-md" className="text-gray-200">
+            <Text variant="title-md" className="text-gray-200!">
               Horários
             </Text>
 
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-2">
-                <Text variant="text-sm" className="text-gray-300">
+                <Text variant="text-sm" className="text-gray-300!">
                   Manhã
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
@@ -48,7 +48,7 @@ export default function PageHome() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Text variant="text-sm" className="text-gray-300">
+                <Text variant="text-sm" className="text-gray-300!">
                   Tarde
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
@@ -62,7 +62,7 @@ export default function PageHome() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Text variant="text-sm" className="text-gray-300">
+                <Text variant="text-sm" className="text-gray-300!">
                   Noite
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
@@ -74,7 +74,7 @@ export default function PageHome() {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <Text variant="title-md" className="text-gray-200">
+            <Text variant="title-md" className="text-gray-200!">
               Cliente
             </Text>
             <InputText />
@@ -83,10 +83,10 @@ export default function PageHome() {
         </form>
       </Schedule>
       <Main>
-        <div className="flex flex-row items-start justify-between w-full">
+        <div className="flex flex-row items-start justify-between w-full self-stretch">
           <div className="flex flex-col gap-1">
             <Text variant="title-lg">Sua agenda</Text>
-            <Text variant="text-sm" className="text-gray-300!">
+            <Text variant="text-sm" className="text-gray-300">
               Consulte os seus cortes de cabelo agendados por dia
             </Text>
           </div>
