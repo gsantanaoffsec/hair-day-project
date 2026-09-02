@@ -5,17 +5,48 @@ import Text from '../components/text'
 import InputText from '../components/text-input'
 import TimeSelect from '../components/time-select'
 import Main from '../core-component/main'
-import PeriodCard from '../core-component/period-card'
+import PeriodCard, { type Appointment } from '../core-component/period-card'
 import Schedule from '../core-component/schedule'
 import CloudSunIcon from './../assets/icons/cloud-sun.svg?react'
 import MoonStarsIcon from './../assets/icons/moon-stars.svg?react'
 import SunHorizonIcon from './../assets/icons/sun-horizon.svg?react'
 
+// Estão fora, pois nunca mudam — dentro do componente, seriam recriados a cada renderização sem motivo
+
+const morningHours = ['09:00', '10:00', '11:00', '12:00']
+const afternoonHours = ['13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
+const nightHours = ['19:00', '20:00', '21:00']
+
 export default function PageHome() {
+  // // Horário escolhido no formulário; '' quando nenhum foi selecionado
   const [selectedTime, setSelectedTime] = React.useState('')
 
-  function handleSelectTime(time: string) {
-    setSelectedTime(time)
+  // Nome digitado no campo de cliente
+  const [clientNameForm, setClientNameForm] = React.useState('')
+
+  // Todos os agendamentos criados, exibidos nos cards de período
+  const [appointments, setAppointments] = React.useState<Appointment[]>([])
+
+  function handleCreateAppointment(event: React.SubmitEvent<HTMLFormElement>) {
+    // Impede o navegador de recarregar a página, comportamento padrão ao enviar um <form>
+    event.preventDefault()
+
+    const newAppointment = {
+      id: crypto.randomUUID(),
+      hour: selectedTime,
+      clientName: clientNameForm,
+    }
+
+    // Pega tudo que já estava na lista e acrescente esse item no final
+    setAppointments([...appointments, newAppointment])
+
+    setClientNameForm('')
+
+    setSelectedTime('')
+  }
+
+  function handleDeleteAppointment(id: string) {
+    setAppointments(appointments.filter((item) => item.id !== id))
   }
 
   return (
@@ -28,7 +59,10 @@ export default function PageHome() {
             agendamento
           </Text>
         </div>
-        <form className="flex flex-col gap-8 self-stretch">
+        <form
+          onSubmit={handleCreateAppointment}
+          className="flex flex-col gap-8 self-stretch"
+        >
           <div className="flex flex-col gap-2 self-stretch">
             <Text variant="title-md" className="text-gray-200!">
               Data
@@ -47,20 +81,16 @@ export default function PageHome() {
                   Manhã
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
-                  <TimeSelect
-                    selected={selectedTime === '09:00'}
-                    onClick={() => setSelectedTime({})}
-                  >
-                    09:00
-                  </TimeSelect>
-                  <TimeSelect
-                    selected={selectedTime === '10:00'}
-                    onClick={handleSelectTime}
-                  >
-                    10:00
-                  </TimeSelect>
-                  <TimeSelect>11:00</TimeSelect>
-                  <TimeSelect>12:00</TimeSelect>
+                  {morningHours.map((hour) => (
+                    <TimeSelect
+                      disabled={appointments.some((item) => item.hour === hour)}
+                      selected={hour === selectedTime}
+                      onClick={() => setSelectedTime(hour)}
+                      key={hour}
+                    >
+                      {hour}
+                    </TimeSelect>
+                  ))}
                 </div>
               </div>
 
@@ -69,12 +99,16 @@ export default function PageHome() {
                   Tarde
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
-                  <TimeSelect>13:00</TimeSelect>
-                  <TimeSelect>14:00</TimeSelect>
-                  <TimeSelect>15:00</TimeSelect>
-                  <TimeSelect>16:00</TimeSelect>
-                  <TimeSelect>17:00</TimeSelect>
-                  <TimeSelect>18:00</TimeSelect>
+                  {afternoonHours.map((hour) => (
+                    <TimeSelect
+                      disabled={appointments.some((item) => item.hour === hour)}
+                      selected={hour === selectedTime}
+                      onClick={() => setSelectedTime(hour)}
+                      key={hour}
+                    >
+                      {hour}
+                    </TimeSelect>
+                  ))}
                 </div>
               </div>
 
@@ -83,9 +117,16 @@ export default function PageHome() {
                   Noite
                 </Text>
                 <div className="flex flex-row flex-wrap gap-2">
-                  <TimeSelect>19:00</TimeSelect>
-                  <TimeSelect>20:00</TimeSelect>
-                  <TimeSelect>21:00</TimeSelect>
+                  {nightHours.map((hour) => (
+                    <TimeSelect
+                      disabled={appointments.some((item) => item.hour === hour)}
+                      selected={hour === selectedTime}
+                      onClick={() => setSelectedTime(hour)}
+                      key={hour}
+                    >
+                      {hour}
+                    </TimeSelect>
+                  ))}
                 </div>
               </div>
             </div>
@@ -94,7 +135,11 @@ export default function PageHome() {
             <Text variant="title-md" className="text-gray-200!">
               Cliente
             </Text>
-            <InputText />
+            <InputText
+              value={clientNameForm}
+              filled={clientNameForm.length > 0}
+              onChange={(event) => setClientNameForm(event.target.value)}
+            />
           </div>
           <Button>AGENDAR</Button>
         </form>
@@ -113,25 +158,28 @@ export default function PageHome() {
           icon={SunHorizonIcon}
           period="Manhã"
           hours="09-12h"
-          appointments={[
-            { id: '1', hour: '11:00', clientName: 'Ryan Dorwart' },
-          ]}
+          onDelete={handleDeleteAppointment}
+          appointments={appointments.filter((item) =>
+            morningHours.includes(item.hour),
+          )}
         />
         <PeriodCard
           icon={CloudSunIcon}
           period="Tarde"
           hours="13-18h"
-          appointments={[
-            { id: '1', hour: '11:00', clientName: 'Ryan Dorwart' },
-          ]}
+          onDelete={handleDeleteAppointment}
+          appointments={appointments.filter((item) =>
+            afternoonHours.includes(item.hour),
+          )}
         />
         <PeriodCard
           icon={MoonStarsIcon}
           period="Noite"
           hours="19-21h"
-          appointments={[
-            { id: '1', hour: '11:00', clientName: 'Ryan Dorwart' },
-          ]}
+          onDelete={handleDeleteAppointment}
+          appointments={appointments.filter((item) =>
+            nightHours.includes(item.hour),
+          )}
         />
       </Main>
     </div>

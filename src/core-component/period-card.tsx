@@ -5,7 +5,7 @@ import Icon from '../components/icon'
 import Text from '../components/text'
 import { periodCardVariants } from './period-card.variants'
 
-interface Appointment {
+export interface Appointment {
   id: string
   hour: string
   clientName: string
@@ -16,6 +16,7 @@ interface PeriodCardProps extends React.ComponentProps<'div'> {
   period: string
   hours: string
   appointments: Appointment[]
+  onDelete: (id: string) => void
 }
 
 export default function PeriodCard({
@@ -23,6 +24,7 @@ export default function PeriodCard({
   period,
   hours,
   appointments,
+  onDelete,
   className,
   ...props
 }: PeriodCardProps) {
@@ -50,6 +52,7 @@ export default function PeriodCard({
               key={appointment.id}
               hour={appointment.hour}
               clientName={appointment.clientName}
+              onDelete={() => onDelete(appointment.id)}
             />
           ))
         )}

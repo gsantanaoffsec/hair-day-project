@@ -8,11 +8,13 @@ import Text from './text'
 interface AppointmentRowProps extends React.ComponentProps<'div'> {
   hour: string
   clientName: string
+  onDelete?: () => void
 }
 
 export default function AppointmentRow({
   hour,
   clientName,
+  onDelete,
   className,
   ...props
 }: AppointmentRowProps) {
@@ -26,7 +28,12 @@ export default function AppointmentRow({
           {clientName}
         </Text>
       </div>
-      <Icon svg={TrashIcon} className="w-4 h-4"/>
+      <button type="button" onClick={onDelete} className="group cursor-pointer">
+        <Icon
+          svg={TrashIcon}
+          className="w-4 h-4 fill-yellow! group-hover:fill-yellow-dark!"
+        />
+      </button>
     </div>
   )
 }

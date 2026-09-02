@@ -11,13 +11,12 @@ interface TextInputProps
     React.ComponentProps<'input'> {}
 
 export default function InputText({
-  active,
   filled,
   className,
   ...props
 }: TextInputProps) {
   return (
-    <div className={cx(textInputVariants({ active }), className)}>
+    <div className={cx(textInputVariants({ active: filled }), className)}>
       <Icon svg={UserIcon} className="fill-yellow-dark" />
       <input
         placeholder="Nome do cliente"

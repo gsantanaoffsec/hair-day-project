@@ -9,13 +9,14 @@ import {
 interface TimeSelectProps
   extends
     Omit<React.ComponentProps<'button'>, 'disabled'>,
-    VariantProps<typeof timeSelectVariants> {}
+    VariantProps<typeof timeSelectVariants> {
+  children: string
+}
 
 export default function TimeSelect({
   children,
   selected,
   disabled,
-  onClick,
   className,
   ...props
 }: TimeSelectProps) {
@@ -23,7 +24,6 @@ export default function TimeSelect({
     <button
       type="button"
       className={cx(timeSelectVariants({ selected, disabled }), className)}
-      onClick={() => onClick?.(children)}
       {...props}
     >
       <Text className={timeSelectTextVariants({ selected, disabled })}>
