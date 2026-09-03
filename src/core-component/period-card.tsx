@@ -9,6 +9,7 @@ export interface Appointment {
   id: string
   hour: string
   clientName: string
+  date: string
 }
 
 interface PeriodCardProps extends React.ComponentProps<'div'> {

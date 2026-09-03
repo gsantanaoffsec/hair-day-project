@@ -18,14 +18,28 @@ const afternoonHours = ['13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
 const nightHours = ['19:00', '20:00', '21:00']
 
 export default function PageHome() {
-  // // Horário escolhido no formulário; '' quando nenhum foi selecionado
+  const savedData = localStorage.getItem('appointments')
+
+  // Horário escolhido no formulário; '' quando nenhum foi selecionado
   const [selectedTime, setSelectedTime] = React.useState('')
 
   // Nome digitado no campo de cliente
   const [clientNameForm, setClientNameForm] = React.useState('')
 
   // Todos os agendamentos criados, exibidos nos cards de período
-  const [appointments, setAppointments] = React.useState<Appointment[]>([])
+  const [appointments, setAppointments] = React.useState<Appointment[]>(
+    savedData ? JSON.parse(savedData) : [],
+  )
+
+  React.useEffect(() => {
+    localStorage.setItem('appointments', JSON.stringify(appointments))
+  }, [appointments])
+
+  // Consulta de agendamentos por data
+  const [selectedDate, setSelectedDate] = React.useState('')
+
+  // Consulta a data de agendamento
+  const [viewDate, setViewDate] = React.useState('')
 
   function handleCreateAppointment(event: React.SubmitEvent<HTMLFormElement>) {
     // Impede o navegador de recarregar a página, comportamento padrão ao enviar um <form>
@@ -35,6 +49,7 @@ export default function PageHome() {
       id: crypto.randomUUID(),
       hour: selectedTime,
       clientName: clientNameForm,
+      date: selectedDate,
     }
 
     // Pega tudo que já estava na lista e acrescente esse item no final
@@ -67,7 +82,10 @@ export default function PageHome() {
             <Text variant="title-md" className="text-gray-200!">
               Data
             </Text>
-            <DateInput />
+            <DateInput
+              value={selectedDate}
+              onChange={(event) => setSelectedDate(event.target.value)}
+            />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -83,7 +101,10 @@ export default function PageHome() {
                 <div className="flex flex-row flex-wrap gap-2">
                   {morningHours.map((hour) => (
                     <TimeSelect
-                      disabled={appointments.some((item) => item.hour === hour)}
+                      disabled={appointments.some(
+                        (item) =>
+                          item.hour === hour && item.date === selectedDate,
+                      )}
                       selected={hour === selectedTime}
                       onClick={() => setSelectedTime(hour)}
                       key={hour}
@@ -101,7 +122,10 @@ export default function PageHome() {
                 <div className="flex flex-row flex-wrap gap-2">
                   {afternoonHours.map((hour) => (
                     <TimeSelect
-                      disabled={appointments.some((item) => item.hour === hour)}
+                      disabled={appointments.some(
+                        (item) =>
+                          item.hour === hour && item.date === selectedDate,
+                      )}
                       selected={hour === selectedTime}
                       onClick={() => setSelectedTime(hour)}
                       key={hour}
@@ -119,7 +143,10 @@ export default function PageHome() {
                 <div className="flex flex-row flex-wrap gap-2">
                   {nightHours.map((hour) => (
                     <TimeSelect
-                      disabled={appointments.some((item) => item.hour === hour)}
+                      disabled={appointments.some(
+                        (item) =>
+                          item.hour === hour && item.date === selectedDate,
+                      )}
                       selected={hour === selectedTime}
                       onClick={() => setSelectedTime(hour)}
                       key={hour}
@@ -152,15 +179,19 @@ export default function PageHome() {
               Consulte os seus cortes de cabelo agendados por dia
             </Text>
           </div>
-          <DateInput />
+          <DateInput
+            value={viewDate}
+            onChange={(event) => setViewDate(event.target.value)}
+          />
         </div>
         <PeriodCard
           icon={SunHorizonIcon}
           period="Manhã"
           hours="09-12h"
           onDelete={handleDeleteAppointment}
-          appointments={appointments.filter((item) =>
-            morningHours.includes(item.hour),
+          appointments={appointments.filter(
+            (item) =>
+              morningHours.includes(item.hour) && item.date === viewDate,
           )}
         />
         <PeriodCard
@@ -168,8 +199,9 @@ export default function PageHome() {
           period="Tarde"
           hours="13-18h"
           onDelete={handleDeleteAppointment}
-          appointments={appointments.filter((item) =>
-            afternoonHours.includes(item.hour),
+          appointments={appointments.filter(
+            (item) =>
+              afternoonHours.includes(item.hour) && item.date === viewDate,
           )}
         />
         <PeriodCard
@@ -177,8 +209,8 @@ export default function PageHome() {
           period="Noite"
           hours="19-21h"
           onDelete={handleDeleteAppointment}
-          appointments={appointments.filter((item) =>
-            nightHours.includes(item.hour),
+          appointments={appointments.filter(
+            (item) => nightHours.includes(item.hour) && item.date === viewDate,
           )}
         />
       </Main>

@@ -1,5 +1,16 @@
 @import 'tailwindcss';
 
+@layer base {
+  /* O <input type="date"> nativo desenha o próprio ícone de calendário
+     (::-webkit-calendar-picker-indicator), cinza. O <DateInput> já tem
+     calendário + caret customizados, então escondemos o nativo em todo
+     input de data da aplicação. Firefox ignora esta regra (não implementa
+     o pseudo); lá o appearance-none do input reduz a UI nativa. */
+  input[type='date']::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+}
+
 @theme {
   /* Apaga todas as cores padrões que já vem no TailWindCss e deixa apenas as definidas aqui */
   --color-*: initial;
